@@ -15,7 +15,7 @@ export default {
         secondary: "#f42c37",
         brandYellow: "#fdc62e",
         brandBlue: "#1376f4",
-        brandBlue: "#2dcc6f",
+        brandGreen: "#2dcc6f",
         brandWhite: "#eeeeee",
       },
       container: {

@@ -25,7 +25,6 @@ const MegaMenu = ({ isOpen, onClose, position = 'bottom-center', items = null })
         setDynamicBrands(brands);
       } catch (error) {
         console.error('Failed to load menu data:', error);
-      } finally {
       }
     };
     fetchData();

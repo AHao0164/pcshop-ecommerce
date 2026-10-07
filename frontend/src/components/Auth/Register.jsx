@@ -45,21 +45,23 @@ const Register = () => {
     let error = '';
 
     switch (name) {
-      case 'email':
+      case 'email': {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (value && !emailRegex.test(value)) {
           error = 'Email không hợp lệ (ví dụ: example@domain.com)';
         }
         break;
+      }
 
-      case 'phone':
+      case 'phone': {
         const phoneRegex = /^\d{10}$/;
         if (value && !phoneRegex.test(value.replace(/\s/g, ''))) {
           error = 'Số điện thoại phải có đúng 10 chữ số';
         }
         break;
+      }
 
-      case 'password':
+      case 'password': {
         if (value) {
           const hasUpperCase = /[A-Z]/.test(value);
           const hasLowerCase = /[a-z]/.test(value);
@@ -80,6 +82,7 @@ const Register = () => {
           }
         }
         break;
+      }
 
       default:
         break;

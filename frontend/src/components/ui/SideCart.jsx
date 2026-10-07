@@ -5,6 +5,7 @@ import { FaUser } from 'react-icons/fa'
 import Button from './Button'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { fetchCart, removeCartItem } from '../../services/cart'
+import VI from '../../constants/vi'
 
 const SideCart = ({ isOpen, onClose }) => {
   const { user, api, token } = useAuth();
