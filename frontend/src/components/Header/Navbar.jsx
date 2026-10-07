@@ -40,6 +40,7 @@ import {
   SheetTrigger,
 } from '../ui/sheet'
 import { Separator } from '../ui/separator'
+import MegaMenu, { MEGA_MENU_DATA } from './MegaMenu'
 
 export default function Navbar() {
   const navigate = useNavigate()
@@ -225,23 +226,69 @@ export default function Navbar() {
 
                 <Separator className="my-4" />
 
-                {/* Categories */}
+                {/* Categories Grouped */}
                 <div className="mb-6">
-                  <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-3 mb-2">
-                    Danh mục linh kiện
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground px-3 mb-2.5 flex items-center justify-between">
+                    <span>Danh mục sản phẩm</span>
+                    <Sparkles className="h-3 w-3 text-primary" />
                   </h4>
-                  <div className="space-y-1">
-                    {categories.slice(0, 10).map((cat) => (
-                      <Link
-                        key={cat.id}
-                        to={`/products?categoryId=${cat.id}`}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-between rounded-lg px-3 py-2 text-sm hover:bg-muted"
-                      >
-                        <span>{cat.name}</span>
-                        <ChevronDown className="h-3 w-3 -rotate-90 text-muted-foreground" />
-                      </Link>
-                    ))}
+                  <div className="space-y-2">
+                    {MEGA_MENU_DATA.map((group) => {
+                      const Icon = group.icon
+                      return (
+                        <div key={group.id} className="rounded-xl border border-border/60 overflow-hidden">
+                          <div className="flex items-center justify-between px-3 py-2 bg-muted/30">
+                            <div className="flex items-center gap-2">
+                              <div className="h-6 w-6 rounded-md bg-primary/10 text-primary flex items-center justify-center">
+                                <Icon className="h-3.5 w-3.5" />
+                              </div>
+                              <span className="text-xs font-bold text-foreground">{group.name}</span>
+                            </div>
+                            <Link
+                              to={group.bannerLink}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="text-[10px] text-primary font-semibold hover:underline"
+                            >
+                              Tất cả
+                            </Link>
+                          </div>
+                          <div className="p-2 grid grid-cols-2 gap-1.5 bg-background">
+                            {group.subcategories.map((sub, sidx) => {
+                              const matched = categories.find(
+                                (c) =>
+                                  c.name.toLowerCase() === sub.name.toLowerCase() ||
+                                  (sub.keyword && c.name.toLowerCase().includes(sub.keyword.toLowerCase())) ||
+                                  sub.name.toLowerCase().includes(c.name.toLowerCase())
+                              )
+                              const targetLink =
+                                sub.link ||
+                                (matched
+                                  ? `/products?categoryId=${matched.id}`
+                                  : `/products?q=${encodeURIComponent(sub.keyword || sub.name)}`)
+
+                              return (
+                                <Link
+                                  key={sidx}
+                                  to={targetLink}
+                                  onClick={() => setMobileMenuOpen(false)}
+                                  className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-muted text-xs text-foreground min-w-0"
+                                >
+                                  <img
+                                    src={sub.image}
+                                    alt={sub.name}
+                                    className="h-6 w-6 object-contain rounded bg-muted/60 p-0.5 shrink-0"
+                                    onError={(e) => {
+                                      e.currentTarget.style.display = 'none'
+                                    }}
+                                  />
+                                  <span className="truncate text-[11px] font-medium">{sub.name}</span>
+                                </Link>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               </div>
@@ -304,39 +351,14 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Category Dropdown */}
+          {/* Desktop MegaMenu Dropdown */}
           <div className="hidden lg:block ml-2">
-            <DropdownMenu open={categoriesOpen} onOpenChange={setCategoriesOpen}>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-1.5 h-9 rounded-lg">
-                  <Layers className="h-4 w-4 text-primary" />
-                  <span className="font-medium">Danh Mục</span>
-                  <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform duration-200" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56 p-2">
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-semibold">
-                  Linh Kiện & Phần Cứng
-                </DropdownMenuLabel>
-                <DropdownMenuItem asChild>
-                  <Link to="/products" className="cursor-pointer font-medium">
-                    Tất cả sản phẩm
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                {categories.map((cat) => (
-                  <DropdownMenuItem key={cat.id} asChild>
-                    <Link
-                      to={`/products?categoryId=${cat.id}`}
-                      className="flex items-center justify-between cursor-pointer"
-                    >
-                      <span>{cat.name}</span>
-                      <ArrowRight className="h-3 w-3 text-muted-foreground opacity-50" />
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <MegaMenu
+              categories={categories}
+              isOpen={categoriesOpen}
+              onOpenChange={setCategoriesOpen}
+              onClose={() => setCategoriesOpen(false)}
+            />
           </div>
         </div>
 
