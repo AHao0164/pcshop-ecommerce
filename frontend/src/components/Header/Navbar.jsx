@@ -16,7 +16,8 @@ import {
   Sparkles,
   SlidersHorizontal,
   Layers,
-  ArrowRight
+  ArrowRight,
+  ShieldCheck
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
@@ -222,6 +223,19 @@ export default function Navbar() {
                       Đơn hàng của tôi
                     </Link>
                   )}
+                  {token && user?.role === 'ADMIN' && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-bold text-primary bg-primary/10 border border-primary/20"
+                    >
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck className="h-4 w-4" />
+                        <span>Trang Quản Trị</span>
+                      </div>
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  )}
                 </div>
 
                 <Separator className="my-4" />
@@ -401,6 +415,20 @@ export default function Navbar() {
             </Button>
           </Link>
 
+          {/* Admin Portal quick link for ADMIN role */}
+          {token && user?.role === 'ADMIN' && (
+            <Link to="/admin" className="hidden sm:inline-flex">
+              <Button
+                variant="default"
+                size="sm"
+                className="h-9 gap-1.5 bg-gradient-to-r from-red-600 to-rose-600 text-white hover:opacity-90 transition-all duration-200 shadow-sm"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                <span className="font-bold">Quản Trị</span>
+              </Button>
+            </Link>
+          )}
+
           {/* Theme switcher */}
           <Button
             variant="ghost"
@@ -471,6 +499,14 @@ export default function Navbar() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                {user?.role === 'ADMIN' && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="flex items-center gap-2 cursor-pointer font-bold text-primary focus:text-primary">
+                      <ShieldCheck className="h-4 w-4 text-primary" />
+                      <span>Trang Quản Trị</span>
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem asChild>
                   <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
                     <User className="h-4 w-4 text-muted-foreground" />

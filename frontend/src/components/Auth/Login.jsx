@@ -20,16 +20,18 @@ const Login = () => {
   // Redirect if already logged in
   useEffect(() => {
     if (currentToken && currentUser) {
-      // Already logged in, redirect to home or profile
-      const returnUrl = localStorage.getItem('returnUrl');
+      const redirectParam = searchParams.get('redirect')
+      const returnUrl = redirectParam || localStorage.getItem('returnUrl')
       if (returnUrl) {
-        localStorage.removeItem('returnUrl');
-        navigate(returnUrl);
+        localStorage.removeItem('returnUrl')
+        navigate(returnUrl)
+      } else if (currentUser.role === 'ADMIN') {
+        navigate('/admin/dashboard')
       } else {
-        navigate('/');
+        navigate('/')
       }
     }
-  }, [currentToken, currentUser, navigate]);
+  }, [currentToken, currentUser, navigate, searchParams])
 
   // Handle OAuth callback (token from URL)
   useEffect(() => {
@@ -74,13 +76,16 @@ const Login = () => {
       login(token, userData);
       toast.show(`Chào mừng ${userData.fullName || userData.email || emailParam}!`, { type: 'success', duration: 2000 });
       
-      // Check if there's a return URL
-      const returnUrl = localStorage.getItem('returnUrl');
+      // Check if there's a return URL or redirect
+      const redirectParam = searchParams.get('redirect')
+      const returnUrl = redirectParam || localStorage.getItem('returnUrl')
       if (returnUrl) {
-        localStorage.removeItem('returnUrl');
-        navigate(returnUrl);
+        localStorage.removeItem('returnUrl')
+        navigate(returnUrl)
+      } else if (userData.role === 'ADMIN') {
+        navigate('/admin/dashboard')
       } else {
-        navigate('/');
+        navigate('/')
       }
     } catch (err) {
       console.error('OAuth login error:', err);
@@ -122,11 +127,14 @@ const Login = () => {
       login(data.token, userData)
       toast.show(`🎉 Chào mừng ${userData.fullName || userData.email}!`, { type: 'success', duration: 2000 })
       
-      // Check if there's a return URL
-      const returnUrl = localStorage.getItem('returnUrl')
+      // Check if there's a return URL or redirect
+      const redirectParam = searchParams.get('redirect')
+      const returnUrl = redirectParam || localStorage.getItem('returnUrl')
       if (returnUrl) {
         localStorage.removeItem('returnUrl')
         navigate(returnUrl)
+      } else if (userData.role === 'ADMIN') {
+        navigate('/admin/dashboard')
       } else {
         navigate('/')
       }

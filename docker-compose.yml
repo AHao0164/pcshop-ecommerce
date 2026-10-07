@@ -226,7 +226,7 @@ services:
         condition: service_healthy
 
   # ===========================================
-  # Frontend Applications
+  # Frontend Application (Unified Storefront & Admin Portal)
   # ===========================================
   
   frontend:
@@ -237,19 +237,6 @@ services:
     restart: unless-stopped
     ports:
       - "5173:5173"
-    environment:
-      - VITE_API_BASE=http://localhost:8080
-    depends_on:
-      - api-gateway
-
-  adminapp:
-    build:
-      context: ./adminapp
-      dockerfile: Dockerfile
-    container_name: pcshop-admin
-    restart: unless-stopped
-    ports:
-      - "5174:5174"
     environment:
       - VITE_API_BASE=http://localhost:8080
     depends_on:

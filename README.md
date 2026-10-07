@@ -7,7 +7,7 @@
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)](https://www.mysql.com/)
 [![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?logo=redis)](https://redis.io/)
 
-Nền tảng thương mại điện tử chuyên biệt cho thiết bị máy tính, linh kiện PC và phụ kiện gaming cao cấp. Hệ thống được xây dựng trên kiến trúc **Microservices** phân tán, kết hợp giao diện cửa hàng hiện đại theo chuẩn Design System (shadcn/ui & Tailwind CSS).
+Nền tảng thương mại điện tử chuyên biệt cho thiết bị máy tính, linh kiện PC và phụ kiện gaming cao cấp. Hệ thống được xây dựng trên kiến trúc **Microservices** phân tán, kết hợp giao diện tích hợp thông minh giữa Cửa hàng (Storefront) và Cổng Quản Trị (Admin Portal) chung trên một nền tảng duy nhất theo chuẩn Design System (shadcn/ui & Tailwind CSS).
 
 ---
 
@@ -39,9 +39,11 @@ Nền tảng thương mại điện tử chuyên biệt cho thiết bị máy t�
   - Thanh toán linh hoạt: Tiền mặt khi nhận hàng (COD) và Cổng thanh toán trực tuyến **VNPay**.
   - Hệ thống tích điểm thành viên (Loyalty Points) và áp dụng mã giảm giá khuyến mãi.
 
-- 📊 **Cổng quản trị (Admin Portal)**:
-  - Bảng điều khiển theo dõi doanh thu, số lượng đơn hàng và khách hàng mới.
-  - Quản lý kho hàng, sản phẩm, danh mục, thương hiệu và banner quảng cáo.
+- 🛡️ **Cổng Quản Trị Hợp Nhất (Admin Portal - `/admin`)**:
+  - **Đồng bộ phiên đăng nhập**: Đăng nhập chung tại `/login`, hệ thống tự nhận diện vai trò `ADMIN` và cấp quyền truy cập `/admin/*`.
+  - **Chuyển đổi tức thì**: Nút bấm "Trang Quản Trị" trên Navbar cho Admin và nút "Xem Cửa Hàng" tại trang Admin giúp chuyển đổi mượt mà.
+  - **Báo cáo & Thống kê**: Biểu đồ doanh thu 7 ngày, tổng số đơn, xuất file CSV/Excel UTF-8 có dấu tiếng Việt.
+  - **Quản lý toàn diện**: Sản phẩm, danh mục, thương hiệu, banner trang chủ, duyệt đơn hàng, kiểm duyệt đánh giá, khách hàng và voucher khuyến mãi.
 
 ---
 
@@ -49,9 +51,8 @@ Nền tảng thương mại điện tử chuyên biệt cho thiết bị máy t�
 
 | Tầng hệ thống | Công nghệ chính |
 |---------------|-----------------|
-| **Frontend Storefront** | React 19, Vite, Tailwind CSS, shadcn/ui, Radix UI, Lucide Icons |
-| **Admin Dashboard** | React, Vite, Tailwind CSS, Recharts |
-| **API Gateway** | Express Gateway, JWT Authentication, Rate Limiting, CORS |
+| **Frontend & Admin Unified** | React 19, Vite, Tailwind CSS, shadcn/ui, Radix UI, Lucide Icons |
+| **API Gateway** | Express Gateway, JWT Authentication, Role-Based Access Control (RBAC), Rate Limiting, CORS |
 | **Microservices Backend** | Node.js, Express (Auth, Catalog, Cart, Order, Payment Services) |
 | **Cơ sở dữ liệu & Cache** | MySQL 8.0, Redis 7 (Session & Cart Cache), Elasticsearch 8.x |
 | **Triển khai & Vận hành** | Docker, Docker Compose |
@@ -61,12 +62,12 @@ Nền tảng thương mại điện tử chuyên biệt cho thiết bị máy t�
 ## 🚀 Hướng Dẫn Cài Đặt & Khởi Chạy
 
 ### 1. Yêu cầu hệ thống
-- Đã cài đặt [Docker](https://www.docker.com/products/docker-desktop/) và **Docker Compose**.
+- Đã cài đặt [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 - Đảm bảo Docker Desktop đang chạy.
 
 ### 2. Khởi chạy toàn bộ hệ thống bằng Docker (Khuyên dùng)
 
-Mở terminal tại thư mục gốc của dự án và chạy lệnh sau:
+Mở terminal tại thư mục gốc của dự án và chạy:
 
 ```bash
 docker compose up -d --build
@@ -74,18 +75,18 @@ docker compose up -d --build
 
 Lệnh này sẽ tự động:
 1. Khởi tạo cơ sở dữ liệu MySQL, Redis và Elasticsearch.
-2. Thực thi script nạp dữ liệu mẫu (`init-unified.sql`).
+2. Nạp dữ liệu mẫu ban đầu (`init-unified.sql`).
 3. Khởi chạy API Gateway cùng 5 microservices backend.
-4. Đóng gói và chạy ứng dụng Frontend (`:5173`) và Admin Dashboard (`:5174`).
+4. Đóng gói và chạy ứng dụng Frontend hợp nhất trên cổng `:5173`.
 
 ### 3. Địa chỉ truy cập các dịch vụ
 
-Sau khi các container khởi động thành công:
+Sau khi các container khởi động:
 
 | Dịch vụ | Địa chỉ URL | Mô tả |
 |---------|-------------|-------|
-| 🛒 **Storefront (Khách hàng)** | [http://localhost:5173](http://localhost:5173) | Trang mua sắm, danh mục, PC Builder |
-| 📊 **Admin Dashboard** | [http://localhost:5174](http://localhost:5174) | Trang quản trị hệ thống |
+| 🛒 **Cửa Hàng (Storefront)** | [http://localhost:5173](http://localhost:5173) | Trang mua sắm, danh mục, PC Builder |
+| 🛡️ **Trang Quản Trị (Admin Portal)** | [http://localhost:5173/admin](http://localhost:5173/admin) | Quản lý sản phẩm, đơn hàng, thống kê doanh thu |
 | 🌐 **API Gateway** | [http://localhost:8080](http://localhost:8080) | Cổng API tập trung |
 | 🗄️ **MySQL Database** | `localhost:3306` | User: `root` / Pass: `rootpw` |
 
@@ -99,11 +100,9 @@ docker compose down
 
 ---
 
-## 👥 Tài Khoản Mẫu Trải Nghiệm
-
-Hệ thống đã nạp sẵn tài khoản mẫu để bạn có thể kiểm tra tính năng nhanh:
+## 👥 Tài Khoản Trải Nghiệm
 
 | Vai trò | Email đăng nhập | Mật khẩu | Quyền hạn |
 |---------|-----------------|----------|-----------|
-| **Quản trị viên (Admin)** | `tenho051512@gmail.com` | `admin123456` | Toàn quyền quản trị hệ thống tại cổng Admin (`:5174`) |
-| **Khách hàng (User)** | Tùy ý đăng ký mới | Tự chọn | Đăng ký trực tiếp trên giao diện cửa hàng (`:5173`) |
+| **Quản trị viên (Admin)** | `tenho051512@gmail.com` | `admin123456` | Tự động mở quyền truy cập Cổng Quản Trị tại [http://localhost:5173/admin](http://localhost:5173/admin) |
+| **Khách hàng (User)** | Tùy ý đăng ký mới | Tự chọn | Mua hàng, xây dựng cấu hình PC, thanh toán |
