@@ -1,16 +1,19 @@
-import React, { createContext, useContext, useMemo, useState } from 'react'
-import { createApiClient } from '../api/client'
+import React, { createContext, useContext, useMemo, useState, useEffect } from 'react'
+import { createApiClient, isTokenExpired } from '../api/client'
 
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => {
     const saved = localStorage.getItem('token')
-    if (saved === 'undefined' || saved === 'null') {
-      localStorage.removeItem('token')
+    if (!saved || saved === 'undefined' || saved === 'null' || isTokenExpired(saved)) {
+      try {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+      } catch {}
       return ''
     }
-    return saved || ''
+    return saved
   })
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('user')
@@ -39,9 +42,22 @@ export function AuthProvider({ children }) {
   const logout = () => { 
     setToken('')
     setUser(null)
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
+    try {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+    } catch {}
   }
+
+  // Auto logout on 401 unauthorized event
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      logout()
+    }
+    window.addEventListener('auth:unauthorized', handleUnauthorized)
+    return () => {
+      window.removeEventListener('auth:unauthorized', handleUnauthorized)
+    }
+  }, [])
   
   const value = { token, user, api, login: loginUser, logout }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

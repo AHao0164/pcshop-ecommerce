@@ -75,6 +75,11 @@ export default function Profile() {
           })
         }
       } catch (e) {
+        if (e.response?.status === 401) {
+          logout()
+          navigate('/login')
+          return
+        }
         console.error('Load profile error:', e)
       } finally {
         setLoading(false)

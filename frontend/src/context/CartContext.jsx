@@ -39,7 +39,18 @@ export function CartProvider({ children }) {
         setShowBadge(true)
       }
     } catch (e) {
-      console.error('Load cart count error:', e)
+      if (e.response?.status === 401) {
+        // Token expired/invalid - load guest cart instead of spamming console error
+        try {
+          const storedGuestCartItems = JSON.parse(sessionStorage.getItem('guestCartItems') || '[]')
+          const count = storedGuestCartItems.reduce((sum, item) => sum + (item.quantity || 0), 0)
+          setCartCount(count)
+        } catch {
+          setCartCount(0)
+        }
+        return
+      }
+      console.warn('Load cart count failed:', e.message || e)
     }
   }
 
