@@ -132,3 +132,55 @@ textarea {
     @apply bg-gradient-to-r from-gray-300/80 to-gray-100 dark:from-gray-900 dark:to-gray-800 dark:text-white;
   }
 }
+
+/* Print stylesheets for clean Quotations / Invoices */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* Hide regular UI elements, navigation, dialogs, overlays, chat widgets */
+  header,
+  footer,
+  nav,
+  aside,
+  [data-radix-portal],
+  [data-radix-popper-content-wrapper],
+  .no-print,
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Ensure the printable quotation sheet is visible, clean, and full width */
+  .print-only,
+  .print-sheet {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .print-avoid-break {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+}
