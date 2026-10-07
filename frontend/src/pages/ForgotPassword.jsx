@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '../ui/Toast';
+import { API_BASE } from '../api/client';
 import { FaEye, FaEyeSlash, FaHome, FaEnvelope, FaLock, FaKey } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -39,7 +40,7 @@ const ForgotPassword = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/auth/forgot-password', {
+      const response = await fetch(`${API_BASE}/auth/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -80,7 +81,7 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       // Verify OTP with backend first
-      const response = await fetch('http://localhost:8080/auth/verify-reset-otp', {
+      const response = await fetch(`${API_BASE}/auth/verify-reset-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp })
@@ -121,7 +122,7 @@ const ForgotPassword = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/auth/reset-password', {
+      const response = await fetch(`${API_BASE}/auth/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp, newPassword })

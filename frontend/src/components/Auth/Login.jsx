@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../ui/Toast'
+import { API_BASE } from '../../api/client'
 import { FaEye, FaEyeSlash, FaHouse } from 'react-icons/fa6'
 import VI from '../../constants/vi'
 
@@ -94,12 +95,12 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/google';
-  };
+    window.location.href = `${API_BASE}/auth/google`
+  }
 
   const handleFacebookLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/facebook';
-  };
+    window.location.href = `${API_BASE}/auth/facebook`
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()

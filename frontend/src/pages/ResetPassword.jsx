@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useToast } from '../ui/Toast';
+import { API_BASE } from '../api/client';
 import { FaEye, FaEyeSlash, FaLock, FaHome } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -32,7 +33,7 @@ const ResetPassword = () => {
 
   const verifyToken = async (tokenToVerify) => {
     try {
-      const response = await fetch(`http://localhost:8080/auth/verify-reset-token?token=${tokenToVerify}`);
+      const response = await fetch(`${API_BASE}/auth/verify-reset-token?token=${tokenToVerify}`);
       const data = await response.json();
       
       if (data.valid) {
@@ -67,7 +68,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/auth/reset-password-token', {
+      const response = await fetch(`${API_BASE}/auth/reset-password-token`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, newPassword })
