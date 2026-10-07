@@ -9,7 +9,9 @@ import { useToast } from '../ui/Toast'
 import Banner from '../components/Banner'
 import Category from '../components/Category/Categoty'
 import Footer from '../components/Footer'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+import { Cpu, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react'
+import { Button } from '../components/ui/button'
 import VI from '../constants/vi'
 
 export default function Home() {
@@ -247,8 +249,61 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="w-full border-t border-slate-200 dark:border-slate-800 bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-50"></div>
+      {/* PC Builder Interactive CTA Section */}
+      <section className="w-full py-8">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-slate-900 via-slate-950 to-primary/20 p-8 sm:p-12 text-white shadow-xl">
+            {/* Background decorative glow */}
+            <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
+            <div className="absolute -left-20 -bottom-20 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-8 space-y-4">
+                <div className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                  <Sparkles className="h-3.5 w-3.5" /> Tính năng độc quyền GearUp
+                </div>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-bitcount text-white">
+                  Tự Xây Dựng Cấu Hình PC Gaming & Đồ Họa
+                </h2>
+                <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+                  Tự do lựa chọn linh kiện theo ý thích. Hệ thống tự động tính toán công suất tiêu thụ (Watt) và kiểm tra tương thích linh kiện 100%.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-6 pt-2 text-xs sm:text-sm text-slate-300">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                    <span>Miễn phí lắp ráp & cài đặt</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                    <span>Bảo hành tận nơi 12 tháng</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                    <span>Hỗ trợ trả góp 0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-center">
+                <Link to="/build-pc">
+                  <Button
+                    size="lg"
+                    className="h-14 px-8 text-base font-bold gap-3 rounded-2xl shadow-lg shadow-primary/30 hover:scale-105 active:scale-95 transition-all"
+                  >
+                    <Cpu className="h-5 w-5" />
+                    <span>Bắt Đầu Xây PC</span>
+                    <ArrowRight className="h-5 w-5" />
+                  </Button>
+                </Link>
+                <p className="text-xs text-slate-400 mt-3">
+                  Đã có hơn 1,200 cấu hình được tạo tháng này
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Featured products (giữ lại block cũ làm “Gợi ý cho bạn”) */}
       <section id="featured" className="w-full flex items-center justify-center py-20">

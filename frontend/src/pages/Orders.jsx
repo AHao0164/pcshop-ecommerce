@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { listOrders } from '../services/orders'
-import { Card, CardBody } from '../components/ui/Card'
+import { Card, CardBody } from '../components/ui/card'
 import { motion } from 'framer-motion'
 import VI from '../constants/vi'
 

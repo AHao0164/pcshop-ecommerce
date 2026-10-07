@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Card, CardBody } from '../components/ui/Card'
+import { Card, CardBody } from '../components/ui/card'
 import { motion } from 'framer-motion'
 import { useToast } from '../ui/Toast'
 import VI from '../constants/vi'

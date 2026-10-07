@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import { useTheme } from '../ui/ThemeProvider'
-import Button from './ui/Button'
+import Button from './ui/button'
 import VI from '../constants/vi'
 
 export default function Header() {

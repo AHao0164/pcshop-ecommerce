@@ -10,11 +10,12 @@ import { useCart } from '../../context/CartContext.jsx';
 import { useToast } from '../../ui/Toast';
 import VI from '../../constants/vi';
 
+import { resolveImageUrl } from '../../api/client';
+
 // Helper function to get full image URL
 const getImageUrl = (url) => {
   if (!url) return '/images/products/ideapad.png';
-  if (url.startsWith('http')) return url;
-  return `http://localhost:8080${url}`;
+  return resolveImageUrl(url);
 };
 
 const ProductDetail = () => {

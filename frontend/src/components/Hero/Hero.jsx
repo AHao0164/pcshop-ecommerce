@@ -1,5 +1,5 @@
 import Slider from 'react-slick'
-import Button from '../ui/Button'
+import Button from '../ui/button'
 
 const Hero = () => {
 
