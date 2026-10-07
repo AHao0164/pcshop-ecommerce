@@ -1,258 +1,109 @@
-# 🛒 PCShop - E-Commerce Platform
+# ⚡ GearUp - PC & Gaming Gear E-Commerce Platform
 
-## 📋 Mô Tả Dự Án
+[![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=node.js)](https://nodejs.org/)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker)](https://www.docker.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)](https://www.mysql.com/)
+[![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?logo=redis)](https://redis.io/)
 
-PCShop là một nền tảng thương mại điện tử được xây dựng với kiến trúc **Microservices**, sử dụng các công nghệ hiện đại như Node.js, Redis, MySQL, Docker và CI/CD. Dự án thể hiện khả năng thiết kế và triển khai hệ thống phân tán quy mô lớn.
+Nền tảng thương mại điện tử chuyên biệt cho thiết bị máy tính, linh kiện PC và phụ kiện gaming cao cấp. Hệ thống được xây dựng trên kiến trúc **Microservices** phân tán, kết hợp giao diện cửa hàng hiện đại theo chuẩn Design System (shadcn/ui & Tailwind CSS).
 
-## 🏗️ Kiến Trúc Hệ Thống
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                          CLIENTS                                 │
-├─────────────────────┬───────────────────────────────────────────┤
-│   Frontend (React)   │        Admin App (React)                  │
-│   - Customer UI      │        - Dashboard                        │
-│   - Product Catalog   │        - Order Management                 │
-│   - Shopping Cart     │        - Product Management               │
-└─────────┬───────────┴──────────────┬────────────────────────────┘
-          │                          │
-          ▼                          ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     API Gateway (Express)                        │
-│                  - Rate Limiting & Auth                          │
-│                  - Request Routing                               │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-        ┌────────────────────┼────────────────────┐
-        ▼                    ▼                    ▼
-┌───────────────┐  ┌─────────────────┐  ┌─────────────────┐
-│ Auth Service  │  │ Catalog Service │  │  Cart Service   │
-│ - JWT/OAuth   │  │ - Products      │  │  - Redis Store  │
-│ - Sessions    │  │ - Categories    │  │  - Guest/User   │
-│ - Redis Cache │  │ - Search (ES)   │  │                 │
-└───────────────┘  │ - AI Chatbot    │  └─────────────────┘
-                   └─────────────────┘
-        ┌────────────────────┐        ┌─────────────────┐
-        ▼                    ▼        ▼                 ▼
-┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
-│ Order Service   │  │ Payment Service│  │   MySQL DB      │
-│ - Order Mgmt    │  │ - Payment Proc │  │   - Primary     │
-│ - Shipping      │  │ - Transaction   │  │   - Replica     │
-│ - Points System │  │                 │  │                 │
-└─────────────────┘  └─────────────────┘  └─────────────────┘
-```
-
-## 🛠️ Công Nghệ Sử Dụng
-
-### Backend
-| Công nghệ | Mục đích |
-|-----------|----------|
-| **Node.js/Express** | Runtime & REST API |
-| **MySQL** | Primary Database |
-| **Redis** | Caching & Session Store |
-| **Elasticsearch** | Full-text Search |
-| **Socket.IO** | Real-time Communication |
-
-### Frontend
-| Công nghệ | Mục đích |
-|-----------|----------|
-| **React.js** | UI Framework |
-| **Vite** | Build Tool |
-| **Tailwind CSS** | Styling |
-| **React Router** | Navigation |
-
-### Infrastructure
-| Công nghệ | Mục đích |
-|-----------|----------|
-| **Docker** | Containerization |
-| **GitHub Actions** | CI/CD Pipeline |
-| **Google OAuth** | Social Authentication |
-
-## 📁 Cấu Trúc Dự Án
-
-```
-CK_NodeJS/
-├── 📂 services/                    # Microservices
-│   ├── auth-service/               # Authentication & Authorization
-│   │   ├── src/
-│   │   │   ├── controllers/        # Request handlers
-│   │   │   ├── models/             # Database models
-│   │   │   ├── routes/             # API routes
-│   │   │   ├── middleware/         # Auth middleware
-│   │   │   └── eventHandlers.js    # Event-driven handlers
-│   │   └── db/                     # Database migrations
-│   │
-│   ├── catalog-service/            # Product & Category Management
-│   │   ├── src/
-│   │   │   ├── controllers/
-│   │   │   ├── models/
-│   │   │   ├── routes/
-│   │   │   ├── ai/                 # AI features
-│   │   │   │   ├── chatbot.js      # AI Chatbot
-│   │   │   │   ├── sentiment-analysis.js
-│   │   │   │   └── gemini-client.js
-│   │   │   └── index.js
-│   │   └── db/
-│   │
-│   ├── cart-service/               # Shopping Cart (Redis-based)
-│   │   ├── src/
-│   │   ├── shared/                 # Shared utilities
-│   │   └── db/
-│   │
-│   ├── order-service/              # Order Processing
-│   │   ├── src/
-│   │   │   ├── controllers/
-│   │   │   ├── models/
-│   │   │   └── routes/
-│   │   └── db/
-│   │
-│   ├── payment-service/            # Payment Processing
-│   │   ├── src/
-│   │   └── shared/
-│   │
-│   └── shared/                     # Shared code across services
-│       └── RedisLockManager.js
-│
-├── 📂 gateway/                     # API Gateway
-│   └── api-gateway/
-│       └── src/
-│
-├── 📂 frontend/                    # Customer Frontend
-│   ├── src/
-│   │   ├── components/            # React components
-│   │   │   ├── Auth/              # Login, Register, OAuth
-│   │   │   ├── Cart/
-│   │   │   ├── Category/
-│   │   │   ├── Filter/
-│   │   │   ├── Footer/
-│   │   │   ├── Header/
-│   │   │   ├── Hero/
-│   │   │   ├── Navbar/
-│   │   │   └── ui/                # Reusable UI components
-│   │   ├── pages/                 # Page components
-│   │   ├── services/              # API clients
-│   │   ├── context/               # React Context
-│   │   ├── constants/             # App constants
-│   │   └── api/                   # Axios configuration
-│   └── public/
-│
-├── 📂 adminapp/                    # Admin Dashboard
-│   ├── src/
-│   │   ├── components/
-│   │   └── pages/
-│   │       ├── DashboardPage.jsx
-│   │       ├── OrdersPage.jsx
-│   │       ├── CategoriesPage.jsx
-│   │       ├── BrandsPage.jsx
-│   │       ├── ProductsPage.jsx
-│   │       └── BannersPage.jsx
-│   └── Dockerfile
-│
-├── 📂 db/                          # Database Scripts
-│   ├── init-unified.sql
-│   └── migrations/
-│
-├── 📂 tools/                       # Development Tools
-│   └── seed/
-│       └── seed.js
-│
-├── 📂 .github/workflows/           # CI/CD Pipelines
-│   ├── ci-cd.yml
-│   ├── docker-build.yml
-│   └── deploy.yml
-│
-└── docker-compose.yml              # Container orchestration
-```
+---
 
 ## ✨ Tính Năng Nổi Bật
 
-### 🤖 AI Integration
-- **AI Chatbot**: Hỗ trợ khách hàng 24/7
-- **Sentiment Analysis**: Phân tích đánh giá sản phẩm
-- **Smart Search**: Tìm kiếm sản phẩm thông minh với Elasticsearch
+- 🛒 **Giao diện Storefront hiện đại**:
+  - Giao diện cao cấp hỗ trợ Dark/Light mode, tối ưu trải nghiệm người dùng trên mọi thiết bị.
+  - **Mega Menu thông minh** (phong cách Phong Vũ / GearVN): Thu gọn danh mục chính, tự động mở rộng các ngách nhỏ khi rê chuột, kèm hình ảnh minh họa trực quan.
+  - Bộ lọc đa tiêu chí (Faceted Search): lọc theo thương hiệu, khoảng giá, phân loại sản phẩm.
 
-### 🔐 Authentication & Security
-- **JWT Token** authentication
-- **OAuth 2.0** (Google, Facebook)
-- **OTP Verification** qua email
-- **Redis Session** management
-- **Rate Limiting** qua API Gateway
+- 🛠️ **Xây dựng cấu hình PC (PC Builder)**:
+  - Tự do tùy biến 12 linh kiện máy tính (CPU, Mainboard, RAM, SSD, Card đồ họa VGA, Nguồn PSU, Vỏ Case, Tản nhiệt...).
+  - **Tính toán điện năng tự động**: Ước tính công suất tiêu thụ (~Watt) và tự động đưa ra khuyến nghị công suất nguồn PSU an toàn.
+  - **Kiểm tra tương thích**: Đánh giá độ đồng bộ và nhắc nhở các linh kiện bắt buộc trước khi lắp ráp.
+  - **1-Click thêm vào giỏ**: Đưa toàn bộ cấu hình vào giỏ hàng hoặc thanh toán nhanh.
 
-### 🛒 E-Commerce Core
-- Quản lý sản phẩm & danh mục đa cấp
-- Giỏ hàng (hỗ trợ guest & authenticated users)
-- Xử lý đơn hàng & theo dõi
-- Hệ thống điểm thưởng (Loyalty Points)
-- Mã giảm giá & khuyến mãi
-- Thanh toán đa kênh
+- 🖨️ **In bảng báo giá chuẩn Showroom**:
+  - Xem trước & in bảng báo giá A4 chuyên nghiệp ngay trên trình duyệt.
+  - Tự động hiển thị linh kiện đã chọn, tính chiết khấu, miễn phí lắp ráp/giao hàng.
+  - Tự động chuyển đổi số tiền thành chữ tiếng Việt chuẩn xác (VD: *"Hai mươi lăm triệu sáu trăm nghìn đồng chẵn"*).
+  - Xuất file PDF hoặc in trực tiếp với định dạng khổ giấy A4 sắc nét.
 
-### 📊 Admin Dashboard
-- Dashboard thống kê
-- Quản lý sản phẩm, danh mục, thương hiệu
-- Quản lý đơn hàng
-- Banner management
-- Export Excel reports
+- 🔍 **Tìm kiếm & Trợ lý thông minh**:
+  - Tích hợp Elasticsearch cho tốc độ tìm kiếm sản phẩm tức thì.
+  - AI Assistant hỗ trợ giải đáp thắc mắc và gợi ý cấu hình phù hợp nhu cầu.
 
-### 🚀 DevOps
-- **Docker** containerization cho từng service
-- **CI/CD** với GitHub Actions
-- **Auto-deployment** pipeline
-- Database migrations & seeding
+- 💳 **Thanh toán & Đơn hàng**:
+  - Hỗ trợ giỏ hàng độc lập cho cả khách vãng lai (Guest) và thành viên đã đăng nhập.
+  - Thanh toán linh hoạt: Tiền mặt khi nhận hàng (COD) và Cổng thanh toán trực tuyến **VNPay**.
+  - Hệ thống tích điểm thành viên (Loyalty Points) và áp dụng mã giảm giá khuyến mãi.
 
-## 📊 Services Breakdown
+- 📊 **Cổng quản trị (Admin Portal)**:
+  - Bảng điều khiển theo dõi doanh thu, số lượng đơn hàng và khách hàng mới.
+  - Quản lý kho hàng, sản phẩm, danh mục, thương hiệu và banner quảng cáo.
 
-| Service | Port | Database | Description |
-|---------|------|----------|-------------|
-| API Gateway | 3000 | - | Entry point, routing |
-| Auth Service | 3001 | MySQL + Redis | Authentication |
-| Catalog Service | 3002 | MySQL + ES | Products/Search |
-| Cart Service | 3003 | Redis | Shopping cart |
-| Order Service | 3004 | MySQL | Order processing |
-| Payment Service | 3005 | MySQL | Payments |
-| Frontend | 5173 | - | Customer UI |
-| Admin App | 5174 | - | Admin Dashboard |
+---
 
-## 🔧 Cài Đặt & Chạy
+## 🛠️ Công Nghệ Sử Dụng
 
-### Yêu Cầu
-- Node.js 18+
-- Docker & Docker Compose
-- MySQL 8.0
-- Redis 7.0
-- Elasticsearch 8.x
+| Tầng hệ thống | Công nghệ chính |
+|---------------|-----------------|
+| **Frontend Storefront** | React 19, Vite, Tailwind CSS, shadcn/ui, Radix UI, Lucide Icons |
+| **Admin Dashboard** | React, Vite, Tailwind CSS, Recharts |
+| **API Gateway** | Express Gateway, JWT Authentication, Rate Limiting, CORS |
+| **Microservices Backend** | Node.js, Express (Auth, Catalog, Cart, Order, Payment Services) |
+| **Cơ sở dữ liệu & Cache** | MySQL 8.0, Redis 7 (Session & Cart Cache), Elasticsearch 8.x |
+| **Triển khai & Vận hành** | Docker, Docker Compose |
 
-### Khởi Động Nhanh (Docker)
+---
+
+## 🚀 Hướng Dẫn Cài Đặt & Khởi Chạy
+
+### 1. Yêu cầu hệ thống
+- Đã cài đặt [Docker](https://www.docker.com/products/docker-desktop/) và **Docker Compose**.
+- Đảm bảo Docker Desktop đang chạy.
+
+### 2. Khởi chạy toàn bộ hệ thống bằng Docker (Khuyên dùng)
+
+Mở terminal tại thư mục gốc của dự án và chạy lệnh sau:
 
 ```bash
-# Build và chạy tất cả services
-docker-compose up -d
-
-# Hoặc chạy từng service
-docker-compose up --build [service-name]
+docker compose up -d --build
 ```
 
-### Development Mode
+Lệnh này sẽ tự động:
+1. Khởi tạo cơ sở dữ liệu MySQL, Redis và Elasticsearch.
+2. Thực thi script nạp dữ liệu mẫu (`init-unified.sql`).
+3. Khởi chạy API Gateway cùng 5 microservices backend.
+4. Đóng gói và chạy ứng dụng Frontend (`:5173`) và Admin Dashboard (`:5174`).
+
+### 3. Địa chỉ truy cập các dịch vụ
+
+Sau khi các container khởi động thành công:
+
+| Dịch vụ | Địa chỉ URL | Mô tả |
+|---------|-------------|-------|
+| 🛒 **Storefront (Khách hàng)** | [http://localhost:5173](http://localhost:5173) | Trang mua sắm, danh mục, PC Builder |
+| 📊 **Admin Dashboard** | [http://localhost:5174](http://localhost:5174) | Trang quản trị hệ thống |
+| 🌐 **API Gateway** | [http://localhost:8080](http://localhost:8080) | Cổng API tập trung |
+| 🗄️ **MySQL Database** | `localhost:3306` | User: `root` / Pass: `rootpw` |
+
+### 4. Dừng hệ thống
+
+Khi muốn dừng toàn bộ các container:
 
 ```bash
-# Cài đặt dependencies cho tất cả services
-npm run install:all
-
-# Khởi động một service cụ thể
-cd services/auth-service
-npm start
-
-# Khởi động frontend
-cd frontend
-npm run dev
+docker compose down
 ```
 
-### Database Setup
+---
 
-```bash
-# Chạy migrations
-cd db
-mysql -u root -p < init-unified.sql
+## 👥 Tài Khoản Mẫu Trải Nghiệm
 
-# Seed data
-node tools/seed/seed.js
-```
+Hệ thống đã nạp sẵn tài khoản mẫu để bạn có thể kiểm tra tính năng nhanh:
+
+| Vai trò | Email đăng nhập | Mật khẩu | Quyền hạn |
+|---------|-----------------|----------|-----------|
+| **Quản trị viên (Admin)** | `tenho051512@gmail.com` | `admin123456` | Toàn quyền quản trị hệ thống tại cổng Admin (`:5174`) |
+| **Khách hàng (User)** | Tùy ý đăng ký mới | Tự chọn | Đăng ký trực tiếp trên giao diện cửa hàng (`:5173`) |
