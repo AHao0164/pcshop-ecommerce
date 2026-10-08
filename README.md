@@ -1,108 +1,126 @@
-# ⚡ GearUp - PC & Gaming Gear E-Commerce Platform
+# ⚡ GearUp - High-Performance PC & Gaming Gear E-Commerce Platform
 
-[![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
-[![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=node.js)](https://nodejs.org/)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker)](https://www.docker.com/)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)](https://www.mysql.com/)
-[![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?logo=redis)](https://redis.io/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
+[![Elasticsearch](https://img.shields.io/badge/Elasticsearch-8.11-005571?style=for-the-badge&logo=elasticsearch&logoColor=white)](https://www.elastic.co/)
 
-Nền tảng thương mại điện tử chuyên biệt cho thiết bị máy tính, linh kiện PC và phụ kiện gaming cao cấp. Hệ thống được xây dựng trên kiến trúc **Microservices** phân tán, kết hợp giao diện tích hợp thông minh giữa Cửa hàng (Storefront) và Cổng Quản Trị (Admin Portal) chung trên một nền tảng duy nhất theo chuẩn Design System (shadcn/ui & Tailwind CSS).
-
----
-
-## ✨ Tính Năng Nổi Bật
-
-- 🛒 **Giao diện Storefront hiện đại**:
-  - Giao diện cao cấp hỗ trợ Dark/Light mode, tối ưu trải nghiệm người dùng trên mọi thiết bị.
-  - **Mega Menu thông minh** (phong cách Phong Vũ / GearVN): Thu gọn danh mục chính, tự động mở rộng các ngách nhỏ khi rê chuột, kèm hình ảnh minh họa trực quan.
-  - Bộ lọc đa tiêu chí (Faceted Search): lọc theo thương hiệu, khoảng giá, phân loại sản phẩm.
-
-- 🛠️ **Xây dựng cấu hình PC (PC Builder)**:
-  - Tự do tùy biến 12 linh kiện máy tính (CPU, Mainboard, RAM, SSD, Card đồ họa VGA, Nguồn PSU, Vỏ Case, Tản nhiệt...).
-  - **Tính toán điện năng tự động**: Ước tính công suất tiêu thụ (~Watt) và tự động đưa ra khuyến nghị công suất nguồn PSU an toàn.
-  - **Kiểm tra tương thích**: Đánh giá độ đồng bộ và nhắc nhở các linh kiện bắt buộc trước khi lắp ráp.
-  - **1-Click thêm vào giỏ**: Đưa toàn bộ cấu hình vào giỏ hàng hoặc thanh toán nhanh.
-
-- 🖨️ **In bảng báo giá chuẩn Showroom**:
-  - Xem trước & in bảng báo giá A4 chuyên nghiệp ngay trên trình duyệt.
-  - Tự động hiển thị linh kiện đã chọn, tính chiết khấu, miễn phí lắp ráp/giao hàng.
-  - Tự động chuyển đổi số tiền thành chữ tiếng Việt chuẩn xác (VD: *"Hai mươi lăm triệu sáu trăm nghìn đồng chẵn"*).
-  - Xuất file PDF hoặc in trực tiếp với định dạng khổ giấy A4 sắc nét.
-
-- 🔍 **Tìm kiếm & Trợ lý thông minh**:
-  - Tích hợp Elasticsearch cho tốc độ tìm kiếm sản phẩm tức thì.
-  - AI Assistant hỗ trợ giải đáp thắc mắc và gợi ý cấu hình phù hợp nhu cầu.
-
-- 💳 **Thanh toán & Đơn hàng**:
-  - Hỗ trợ giỏ hàng độc lập cho cả khách vãng lai (Guest) và thành viên đã đăng nhập.
-  - Thanh toán linh hoạt: Tiền mặt khi nhận hàng (COD) và Cổng thanh toán trực tuyến **VNPay**.
-  - Hệ thống tích điểm thành viên (Loyalty Points) và áp dụng mã giảm giá khuyến mãi.
-
-- 🛡️ **Cổng Quản Trị Hợp Nhất (Admin Portal - `/admin`)**:
-  - **Đồng bộ phiên đăng nhập**: Đăng nhập chung tại `/login`, hệ thống tự nhận diện vai trò `ADMIN` và cấp quyền truy cập `/admin/*`.
-  - **Chuyển đổi tức thì**: Nút bấm "Trang Quản Trị" trên Navbar cho Admin và nút "Xem Cửa Hàng" tại trang Admin giúp chuyển đổi mượt mà.
-  - **Báo cáo & Thống kê**: Biểu đồ doanh thu 7 ngày, tổng số đơn, xuất file CSV/Excel UTF-8 có dấu tiếng Việt.
-  - **Quản lý toàn diện**: Sản phẩm, danh mục, thương hiệu, banner trang chủ, duyệt đơn hàng, kiểm duyệt đánh giá, khách hàng và voucher khuyến mãi.
+**GearUp** là nền tảng thương mại điện tử chuyên biệt cho thiết bị máy tính, linh kiện PC và phụ kiện gaming cao cấp. Dự án được thiết kế theo chuẩn **Kiến trúc Microservices phân tán (Distributed Architecture)**, tối ưu hiệu năng cao với bộ đệm **Redis**, tìm kiếm chuyên sâu thời gian thực bằng **Elasticsearch**, và tích hợp cổng thanh toán trực tuyến **VNPay**.
 
 ---
 
-## 🛠️ Công Nghệ Sử Dụng
+## 🏛️ Kiến Trúc Hệ Thống (System Architecture)
 
-| Tầng hệ thống | Công nghệ chính |
-|---------------|-----------------|
-| **Frontend & Admin Unified** | React 19, Vite, Tailwind CSS, shadcn/ui, Radix UI, Lucide Icons |
-| **API Gateway** | Express Gateway, JWT Authentication, Role-Based Access Control (RBAC), Rate Limiting, CORS |
-| **Microservices Backend** | Node.js, Express (Auth, Catalog, Cart, Order, Payment Services) |
-| **Cơ sở dữ liệu & Cache** | MySQL 8.0, Redis 7 (Session & Cart Cache), Elasticsearch 8.x |
-| **Triển khai & Vận hành** | Docker, Docker Compose |
+```mermaid
+graph TD
+    Client([💻 Web Client / Mobile Browser]) -->|HTTP / REST| Gateway[🌐 API Gateway :8080]
+
+    subgraph "Core Microservices"
+        Gateway -->|Proxy & Auth Check| Auth[🔑 Auth Service :3001]
+        Gateway -->|Product Catalog & Search| Catalog[📦 Catalog Service :3002]
+        Gateway -->|Cart Management| Cart[🛒 Cart Service :3003]
+        Gateway -->|Checkout & Orders| Order[📋 Order Service :3004]
+        Gateway -->|Payment Processing| Payment[💳 Payment Service :3005]
+    end
+
+    subgraph "Data & Cache Layer"
+        Auth --> MySQL[(🗄️ MySQL 8.0)]
+        Catalog --> MySQL
+        Order --> MySQL
+        Payment --> MySQL
+        Cart --> MySQL
+
+        Catalog -.-> ES[(🔍 Elasticsearch 8.11)]
+        Catalog -.-> Redis[(⚡ Redis Cache)]
+        Cart -.-> Redis
+        Order -.-> Redis
+    end
+```
 
 ---
 
-## 🚀 Hướng Dẫn Cài Đặt & Khởi Chạy
+## ✨ Tính Năng Nổi Bật (Key Highlights)
 
-### 1. Yêu cầu hệ thống
-- Đã cài đặt [Docker Desktop](https://www.docker.com/products/docker-desktop/).
-- Đảm bảo Docker Desktop đang chạy.
+### 🛒 1. Cửa Hàng Trực Tuyến Hiện Đại (Storefront)
+- **Thiết kế tối ưu UX/UI:** Dark/Light mode hiện đại, xây dựng trên nền tảng **Tailwind CSS & shadcn/ui**.
+- **Mega Menu thông minh:** Điều hướng danh mục đa cấp phong cách các chuỗi bán lẻ công nghệ hàng đầu (GearVN, Phong Vũ).
+- **Tìm kiếm tức thì (Full-Text Search):** Tích hợp **Elasticsearch 8.11** cho khả năng tìm kiếm sản phẩm theo tên, thông số, thương hiệu với độ trễ cực thấp.
+- **Bộ lọc đa tiêu chí (Faceted Filter):** Lọc theo thương hiệu, khoảng giá, phân loại phần cứng.
+- **Dữ liệu chuẩn bị sẵn (Master Catalog):** Khởi tạo sẵn 57 sản phẩm thực tế, 16 danh mục linh kiện, 30 thương hiệu hàng đầu và 6 banner trang chủ.
 
-### 2. Khởi chạy toàn bộ hệ thống bằng Docker (Khuyên dùng)
+### 🛠️ 2. Công Cụ Xây Dựng Cấu Hình PC (PC Builder)
+- **Tùy biến linh kiện toàn diện:** Chọn và lắp ráp 12 linh kiện (CPU, Mainboard, RAM, SSD, VGA, Nguồn PSU, Vỏ Case, Tản nhiệt...).
+- **Ước tính công suất nguồn tự động:** Thuật toán tự động tính toán tổng điện năng tiêu thụ (~Watt) và đưa ra khuyến nghị công suất nguồn PSU an toàn.
+- **Kiểm tra tương thích phần cứng:** Cảnh báo các linh kiện còn thiếu trước khi hoàn tất cấu hình.
+- **In bảng báo giá chuẩn Showroom:** Xuất file PDF hoặc in trực tiếp bảng báo giá khổ giấy A4 chuyên nghiệp, tự động đọc tổng tiền thành chữ tiếng Việt chuẩn xác (VD: *"Hai mươi lăm triệu sáu trăm nghìn đồng chẵn"*).
 
-Mở terminal tại thư mục gốc của dự án và chạy:
+### 💳 3. Giỏ Hàng & Thanh Toán Đa Kênh
+- **Quản lý giỏ hàng linh hoạt:** Hỗ trợ giỏ hàng độc lập cho cả khách vãng lai (Guest) và tài khoản thành viên.
+- **Cổng thanh toán trực tuyến:** Tích hợp trực tiếp cổng thanh toán **VNPay Sandbox** và phương thức COD (Tiền mặt khi nhận hàng kèm OTP xác thực).
+- **Hệ thống Loyalty Points & Voucher:** Tích điểm tự động sau mỗi đơn hàng thành công và áp dụng mã giảm giá.
+
+### 🛡️ 4. Cổng Quản Trị Hợp Nhất (Unified Admin Portal - `/admin`)
+- **Quản trị chung một nền tảng:** Không cần tách riêng 2 website. Hệ thống phân quyền Role-Based (RBAC), tài khoản Admin đăng nhập sẽ tự động mở thêm bảng điều khiển quản trị.
+- **Báo cáo & Phân tích:** Biểu đồ doanh thu 7 ngày, tổng số đơn, tỷ lệ hoàn tất đơn hàng, xuất báo cáo CSV/Excel chuẩn UTF-8.
+- **Quản lý nghiệp vụ toàn diện:** Quản lý sản phẩm, tồn kho theo biến thể, danh mục, thương hiệu, banner quảng cáo, duyệt đơn hàng và khách hàng.
+
+---
+
+## 🛠️ Công Nghệ Sử Dụng (Tech Stack)
+
+| Phân hệ | Công nghệ |
+| :--- | :--- |
+| **Frontend** | React 19, Vite, Tailwind CSS, shadcn/ui, Radix UI, Lucide Icons, Axios |
+| **API Gateway** | Express Gateway, JWT Authentication, RBAC, Rate Limiting, CORS |
+| **Microservices Backend** | Node.js (ES Modules), Express.js (Auth, Catalog, Cart, Order, Payment) |
+| **Databases & Cache** | MySQL 8.0 (5 database riêng biệt), Redis 7 (Cache & Session), Elasticsearch 8.11 |
+| **Container & DevOps** | Docker, Docker Compose, Multi-stage Builds |
+
+---
+
+## 🚀 Hướng Dẫn Khởi Chạy (Quickstart)
+
+Chỉ cần cài đặt [Docker Desktop](https://www.docker.com/products/docker-desktop/), bạn có thể khởi chạy toàn bộ 10 container chỉ với **1 câu lệnh duy nhất**:
 
 ```bash
 docker compose up -d --build
 ```
 
-Lệnh này sẽ tự động:
-1. Khởi tạo cơ sở dữ liệu MySQL, Redis và Elasticsearch.
-2. Nạp dữ liệu mẫu ban đầu (`init-unified.sql`).
-3. Khởi chạy API Gateway cùng 5 microservices backend.
-4. Đóng gói và chạy ứng dụng Frontend hợp nhất trên cổng `:5173`.
+Hệ thống sẽ tự động:
+1. Kích hoạt cụm hạ tầng: **MySQL 8.0**, **Redis 7**, **Elasticsearch 8.11**.
+2. Tự động nạp dữ liệu sạch ban đầu từ `db/init-unified.sql` (bao gồm 57 sản phẩm, danh mục, banner, tài khoản admin).
+3. Biên dịch và khởi chạy **API Gateway** cùng **5 dịch vụ Microservices**.
+4. Khởi động ứng dụng **Frontend** trên cổng `:5173`.
 
-### 3. Địa chỉ truy cập các dịch vụ
+---
 
-Sau khi các container khởi động:
+## 🌐 Địa Chỉ Truy Cập Dịch Vụ
 
-| Dịch vụ | Địa chỉ URL | Mô tả |
-|---------|-------------|-------|
-| 🛒 **Cửa Hàng (Storefront)** | [http://localhost:5173](http://localhost:5173) | Trang mua sắm, danh mục, PC Builder |
-| 🛡️ **Trang Quản Trị (Admin Portal)** | [http://localhost:5173/admin](http://localhost:5173/admin) | Quản lý sản phẩm, đơn hàng, thống kê doanh thu |
-| 🌐 **API Gateway** | [http://localhost:8080](http://localhost:8080) | Cổng API tập trung |
+| Dịch vụ | URL | Ghi chú |
+| :--- | :--- | :--- |
+| 🛒 **Cửa Hàng (Storefront)** | [http://localhost:5173](http://localhost:5173) | Giao diện mua sắm khách hàng |
+| 🛡️ **Trang Quản Trị (Admin Portal)** | [http://localhost:5173/admin](http://localhost:5173/admin) | Quản lý sản phẩm, đơn hàng, thống kê |
+| 🌐 **API Gateway** | [http://localhost:8080](http://localhost:8080) | Cổng trung chuyển API tập trung |
 | 🗄️ **MySQL Database** | `localhost:3306` | User: `root` / Pass: `rootpw` |
 
-### 4. Dừng hệ thống
+---
 
-Khi muốn dừng toàn bộ các container:
+## 👥 Tài Khoản Trải Nghiệm Mặc Định
+
+| Vai trò | Email đăng nhập | Mật khẩu | Quyền hạn |
+| :--- | :--- | :--- | :--- |
+| **Quản trị viên (Admin)** | `tenho051512@gmail.com` | `admin123456` | Toàn quyền quản trị tại `/admin` |
+| **Khách hàng (User)** | Tùy ý đăng ký mới | Tự chọn | Mua sắm, build PC, đặt hàng |
+
+---
+
+## 🛑 Dừng Hệ Thống
+
+Để tắt toàn bộ hệ thống khi không sử dụng:
 
 ```bash
 docker compose down
 ```
-
----
-
-## 👥 Tài Khoản Trải Nghiệm
-
-| Vai trò | Email đăng nhập | Mật khẩu | Quyền hạn |
-|---------|-----------------|----------|-----------|
-| **Quản trị viên (Admin)** | `tenho051512@gmail.com` | `admin123456` | Tự động mở quyền truy cập Cổng Quản Trị tại [http://localhost:5173/admin](http://localhost:5173/admin) |
-| **Khách hàng (User)** | Tùy ý đăng ký mới | Tự chọn | Mua hàng, xây dựng cấu hình PC, thanh toán |
